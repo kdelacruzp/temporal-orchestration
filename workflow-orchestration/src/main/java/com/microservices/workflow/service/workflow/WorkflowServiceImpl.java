@@ -47,7 +47,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
             activityService.createOrder(orderId);
 
-            //saga.addCompensation(activityService::cancelOrder, orderId);
+            saga.addCompensation(activityService::cancelOrder, orderId);
 
 //            OrderEntity orderEntity = OrderEntity.builder()
 //                    .orderId(orderRequest.getOrderId())
@@ -105,7 +105,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         if (createdOrder) {
             try {
                 activityService.updateOrder(orderEntity);
-//                saga.addCompensation(() -> activityService.cancelOrder(orderEntity.getOrderId()));
+                //saga.addCompensation(() -> activityService.cancelOrder(orderEntity.getOrderId()));
                 updatedOrder = true;
             } catch (Exception e) {
                 log.error("Exception: " + e.getMessage());
@@ -124,7 +124,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         if (updatedOrder) {
             try {
                 activityService.updateProduct(productId, quantity);
-                //saga.addCompensation(() -> activityService.reverseProduct(productId, quantity));
+                saga.addCompensation(() -> activityService.reverseProduct(productId, quantity));
                 updatedProduct = true;
             } catch (Exception e) {
                 log.error("Exception: " + e.getMessage());
@@ -160,7 +160,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public void signalCancelOrder(String orderId) {
-        activityService.cancelOrder(orderId);
+        //activityService.cancelOrder(orderId);
 
         saga.compensate();
         completeWorkflow();

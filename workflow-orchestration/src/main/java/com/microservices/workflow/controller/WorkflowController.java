@@ -30,7 +30,7 @@ public class WorkflowController {
         return orderService.createOrder(orderRequest);
     }*/
 
-    @POST
+    @PATCH
     @Path("/update")
     public OrderRequest updateOrder(OrderRequest orderRequest) {
         return orderService.updateOrder(orderRequest);
