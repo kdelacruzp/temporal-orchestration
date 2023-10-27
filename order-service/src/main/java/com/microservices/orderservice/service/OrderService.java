@@ -1,104 +1,73 @@
 package com.microservices.orderservice.service;
 
-//import com.mitocode.microservices.orderservice.model.entity.OrderEntity;
 import com.microservices.orderservice.model.entity.OrderEntity;
-//import com.mitocode.microservices.orderservice.repository.OrderRepository;
+import com.microservices.orderservice.service.repository.OrderRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.server.ResponseStatusException;
+
 
 @ApplicationScoped
 @RequiredArgsConstructor
 public class OrderService {
 
-    //private final OrderRepository orderRepository;
-
-    private List<OrderEntity> orderEntityList = new ArrayList<>(0);
+    @Inject
+    OrderRepository orderRepository;
 
     public List<OrderEntity> getAllOrder() {
-        return orderEntityList;
+        return orderRepository.getAllOrder();
     }
     public OrderEntity getOrder(String orderId) {
-        return orderEntityList.stream()
-            .filter(t -> t.getOrderId().equals(orderId))
-            .findFirst()
-            .orElse(OrderEntity.builder().build());
+        return orderRepository.getOrder(orderId);
     }
 
     public OrderEntity createOrder(String orderId) {
+
         OrderEntity orderEntity = OrderEntity.builder()
-                .creationDate(System.currentTimeMillis())
-                .orderId(orderId)
-                .status(0)
-                .build();
+            .creationDate(System.currentTimeMillis())
+            .orderId(orderId)
+            .status(0)
+            .build();
 
-        orderEntityList.add(orderEntity);
-
-        //return orderRepository.save(orderEntity);
+        orderRepository.createOrder(orderEntity);
         return orderEntity;
     }
 
     public OrderEntity cancelOrder(String orderId) {
-        //OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(() ->
-        //        new ResponseStatusException(HttpStatus.NOT_FOUND, "Order Id not found"));
 
-        //return orderEntity;
-        OrderEntity orderEntity =
-            orderEntityList.stream().filter(
-                t -> t.getOrderId().equals(orderId)).findFirst().get();
-
+        OrderEntity orderEntity = orderRepository.getOrder(orderId);
         orderEntity.setUpdateDate(System.currentTimeMillis());
         orderEntity.setStatus(9);
-        //orderEntityList..save(orderEntity);
+
+        orderRepository.updateOrder(orderEntity);
 
         return orderEntity;
     }
 
     public OrderEntity updateOrder(OrderEntity orderEntity) {
 
-        //OrderEntity entity = orderRepository.findById(orderEntity.getOrderId()).orElseThrow(() ->
-        //        new ResponseStatusException(HttpStatus.NOT_FOUND, "Order Id not found"));
-
-        //entity.setStatus(2);
-        //entity.setQuantity(orderEntity.getQuantity());
-        //entity.setProductId(orderEntity.getProductId());
-        //entity.setUpdateDate(System.currentTimeMillis());
-        //orderRepository.save(entity);
-        //return entity;
-
-        OrderEntity newOrderEntity =
-            orderEntityList.stream().filter(
-                t -> t.getOrderId().equals(orderEntity.getOrderId())).findFirst().get();
+        OrderEntity newOrderEntity = orderRepository.getOrder(orderEntity.getOrderId());
 
         newOrderEntity.setStatus(1);
         newOrderEntity.setQuantity(orderEntity.getQuantity());
         newOrderEntity.setProductId(orderEntity.getProductId());
         newOrderEntity.setUpdateDate(System.currentTimeMillis());
+        orderRepository.updateOrder(newOrderEntity);
 
         return newOrderEntity;
 
     }
 
     public String acceptOrder(String orderId) {
-        //OrderEntity entity = orderRepository.findById(orderId).orElseThrow(() ->
-        //        new ResponseStatusException(HttpStatus.NOT_FOUND, "Order Id not found"));
 
-        //entity.setStatus(1);
-        //entity.setUpdateDate(System.currentTimeMillis());
-        OrderEntity newOrderEntity =
-            orderEntityList.stream().filter(
-                t -> t.getOrderId().equals(orderId)).findFirst().get();
+        OrderEntity orderEntity = orderRepository.getOrder(orderId);
 
-        newOrderEntity.setStatus(2);
-        newOrderEntity.setUpdateDate(System.currentTimeMillis());
+        orderEntity.setStatus(2);
+        orderEntity.setUpdateDate(System.currentTimeMillis());
         //orderRepository.save(entity);
+        orderRepository.updateOrder(orderEntity);
 
         return "Ok";
 

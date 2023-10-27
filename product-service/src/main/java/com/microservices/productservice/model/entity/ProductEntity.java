@@ -1,6 +1,8 @@
 package com.microservices.productservice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.quarkus.mongodb.panache.PanacheMongoEntity;
+import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.*;
 
 import java.io.Serial;
@@ -8,13 +10,14 @@ import java.io.Serial;
 @Setter
 @Getter
 @Builder
-//@Document(collection = "product")
 //@Entity
 //@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductEntity {
+//@Entity
+//@Table(name = "product")
+public class ProductEntity extends PanacheMongoEntity {
 
     @Serial
     private static final long serialVersionUID = 129348938L;
