@@ -33,6 +33,6 @@ public class ProductController {
   @Path("/reserve/{productId}/{quantity}")
   public String reserve(@PathParam("productId") String productId,
                         @PathParam("quantity") Integer quantity){
-    return productService.reserveProduct(productId, quantity).getProductId();
+    return productService.updateProduct(productId, quantity).getProductId();
   }
 }

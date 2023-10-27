@@ -23,13 +23,13 @@ public class ProductService {
     return productEntity;
   }
 
-  public ProductEntity reserveProduct(String productId, Integer quantity) {
+  public ProductEntity updateProduct(String productId, Integer quantity) {
 
     ProductEntity productEntity =
     productEntityList.stream().filter(p -> p.getProductId().equals(productId))
             .findFirst().orElse(ProductEntity.builder().build());
 
-    productEntity.setStock(productEntity.getStock() + quantity);
+    productEntity.setStock(productEntity.getStock() - quantity);
     return productEntity;
   }
 }
