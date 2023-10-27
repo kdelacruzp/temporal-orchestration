@@ -6,13 +6,21 @@ import jakarta.enterprise.context.ApplicationScoped;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ApplicationScoped
 @RequiredArgsConstructor
 public class ProductService {
 
-  List<ProductEntity> productEntityList = new ArrayList<>();
+  List<ProductEntity> productEntityList
+      = Arrays.asList(ProductEntity.builder()
+                      .productId("P00002")
+                      .productName("Impresa HP Color")
+                      .price(800L)
+                      .stock(100)
+                      .productType("Computo")
+                      .build());
 
   public List<ProductEntity> getAllProducts() {
     return productEntityList;
