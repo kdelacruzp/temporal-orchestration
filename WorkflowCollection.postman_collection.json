@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "dbf12da0-f358-410d-a105-c09092f30529",
+		"name": "WorkflowCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5150060"
+	},
+	"item": [
+		{
+			"name": "Orchestration Workflow",
+			"item": [
+				{
+					"name": "01. Start workflow",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.info(responseBody)",
+									"postman.setEnvironmentVariable(\"workFlowId\", responseBody);",
+									"pm.environment.set(\"workFlowId\", responseBody)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/start/{{orderId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"start",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02. Update Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"workflowId\": \"{{workFlowId}}\",\n    \"orderId\": \"{{orderId}}\",\n    \"productId\": \"{{productId}}\",\n    \"quantity\": 15\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03. Update Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/update/{{productId}}/15/{{workFlowId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update",
+								"{{productId}}",
+								"15",
+								"{{workFlowId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03. Accept Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/update/{{orderId}}/{{workFlowId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update",
+								"{{orderId}}",
+								"{{workFlowId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04. Cancel Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/cancel/{{orderId}}/{{workFlowId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"cancel",
+								"{{orderId}}",
+								"{{workFlowId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05. Orchestration process",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"workflowId\": \"{{workFlowId}}\",\n    \"orderId\": \"{{orderId}}\",\n    \"productId\": \"{{productId}}\",\n    \"quantity\": 14\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/start",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"start"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
