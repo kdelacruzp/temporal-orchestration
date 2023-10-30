@@ -5,8 +5,6 @@ This project uses Quarkus 3.5 and Temporal 1.18.2.
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/
 and for lear more abou Temporal, please visits its website https://docs.temporal.io/.
 
-# Set up a local development environment for Temporal and Java
-
 ### Requirements previous
 - JDK 17: https://www.oracle.com/pe/java/technologies/downloads/#java17 .
 - Maven 3.9.X: https://maven.apache.org/download.cgi
