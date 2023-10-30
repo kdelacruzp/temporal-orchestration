@@ -1,17 +1,33 @@
 # workflow-orchestration
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus 3.5 and Temporal 1.18.2.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/
+and for lear more abou Temporal, please visits its website https://docs.temporal.io/.
+
+# Set up a local development environment for Temporal and Java
+
+### Requirements previous
+- JDK 17: https://www.oracle.com/pe/java/technologies/downloads/#java17 .
+- Maven 3.9.X: https://maven.apache.org/download.cgi
+- Local Temporal Cluster: https://learn.temporal.io/getting_started/java/dev_environment/
 
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
+
+Temporal Orchestration Microservice:
 ```shell script
 ./mvnw compile quarkus:dev
 ```
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8081/q/dev/.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+
+Temporal Cluster:
+```shell script
+temporal server start-dev --db-filename your_temporal.db --ui-port 8080
+```
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080.
 
 ## Packaging and running the application
 
